@@ -75,7 +75,7 @@ const App = props => {
   // }
   
   // Method to manipulate State
-  const inputChangeHandler = (event) => {
+  const inputChangedHandler = (event) => {
     setUsersState({
       users: [
         {userName: event.target.value},
@@ -103,18 +103,17 @@ const App = props => {
       click={switchNameHandler.bind(this, 'Boris!')}
       changed={nameChangedHandler}>My Hobbies: Racing</Person>
       <Person 
-      name={personsState.persons[2].name}  
+      name={personsState.persons[2].name}   
       age={personsState.persons[2].age}/>
       <UserInput
-      changed={inputChangeHandler}/>
+      changed={inputChangedHandler}
+      currentName={userState.users[0].userName}/>
       <UserOutput
-      userName={userState.users[0].userName}
-      ></UserOutput>
+      userName={userState.users[0].userName}/>
       <UserOutput
-      userName={userState.users[1].userName}
-      ></UserOutput>
+      userName={userState.users[1].userName}/>
       <UserOutput
-      userName={userState.users[2].userName}></UserOutput>
+      userName={userState.users[2].userName}/>
     </div>
     );
   }
