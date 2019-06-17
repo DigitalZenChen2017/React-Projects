@@ -10,29 +10,24 @@ import './UserOutput/UserOutput.css';
 const App = props => {
   const [ personsState, setPersonsState ] = useState({
       persons: [
-        {name: 'Boris', age: 28},
-        {name: 'Alan', age: 28},
-        {name: 'Zhi', age: 29}
+        { id: 'bc69', name: 'Boris', age: 28},
+        { id: 'ac28', name: 'Alan', age: 28},
+        { id: 'zwvu18', name: 'Zhi', age: 29}
       ],
-      otherState: 'some other value'
+      otherState: 'some other value',
+      showPersons: false
   });
 
   const [otherState] = useState('some other value');
 
   console.log(personsState, otherState);
   
-  const switchNameHandler = (newName) => {
-    // console.log("This button has been clicked!");
-    // DONT DO THIS personsState.persons[0].name = 'Borisella';
-    setPersonsState({
-      persons: [
-        {name: newName, age: 28},
-        {name: 'Alan', age: 28},
-        {name: 'Zhi', age: 34}
-      ],
-      otherState: otherState
-    });
-  };
+  const  deletePersonHandler = (personIndex) => {
+    // const persons = personsState.persons.slice();
+    const persons = [...personsState.persons]; // SPREAD OPERATOR - creates copy of original array
+    persons.splice(personIndex, 1);
+    setPersonsState({persons: persons});
+  }
 
   const nameChangedHandler = (event) => {
     setPersonsState({
@@ -43,6 +38,12 @@ const App = props => {
       ],
     });
   }
+
+  const [showState, setShowState] = useState(false);
+
+  const togglePersonsHandler = () => {
+    setShowState(!showState);
+  } 
 
   const style = {
     backgroundColor: 'white',
@@ -85,7 +86,24 @@ const App = props => {
       otherState: 'some other valuezzzz'
     }
   )
-  } 
+  }
+  
+  let persons = null;
+
+  // Outputting Lists in React
+  if (showState) {
+    persons = (
+      <div>
+        {personsState.persons.map((person, index) => { 
+          return <Person 
+            name={person.name} 
+            age={person.age}
+            click={() => deletePersonHandler(index)}
+            key={person.id}/>
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="App">
@@ -93,18 +111,8 @@ const App = props => {
       <p>Awesome! This is really working.</p>
       <button 
         style={style}
-        onClick={() => switchNameHandler('Borisella!!')}>Switch Name</button>
-      <Person 
-      name={personsState.persons[0].name} 
-      age={personsState.persons[0].age}/>
-      <Person 
-      name={personsState.persons[1].name} 
-      age={personsState.persons[1].age}
-      click={switchNameHandler.bind(this, 'Boris!')}
-      changed={nameChangedHandler}>My Hobbies: Racing</Person>
-      <Person 
-      name={personsState.persons[2].name}   
-      age={personsState.persons[2].age}/>
+        onClick={togglePersonsHandler}>Toggle Show State</button>
+      {persons}
       <UserInput
       changed={inputChangedHandler}
       currentName={userState.users[0].userName}/>
