@@ -29,13 +29,25 @@ const App = props => {
     setPersonsState({persons: persons});
   }
 
-  const nameChangedHandler = (event) => {
+  const nameChangedHandler = (event, id) => {
+    const personIndex = personsState.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    // Spread operator takes all props of personsState.person into this const person variable
+    const person = {
+      ...personsState.persons[personIndex]
+    };
+
+    // const person = Object.assign({}, personsState.persons[personIndex]);
+
+    person.name = event.target.value;
+
+    const persons = [...personsState.persons];
+    persons[personIndex] = person;
+
     setPersonsState({
-      persons: [
-        {name: 'Boris', age: 28},
-        {name: event.target.value, age: 28},
-        {name: 'Zhi', age: 29}
-      ],
+      persons: persons
     });
   }
 
@@ -46,7 +58,8 @@ const App = props => {
   } 
 
   const style = {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
+    color: 'white',
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
@@ -99,16 +112,31 @@ const App = props => {
             name={person.name} 
             age={person.age}
             click={() => deletePersonHandler(index)}
-            key={person.id}/>
+            key={person.id}
+            changed={(event) => nameChangedHandler(event, person.id)}/>
         })}
       </div>
     );
+
+    style.backgroundColor = 'red';
+  }
+
+  // Red Bold classes
+  const classes = [];
+
+  // Checks if array of persons is <=2 AND then if it's <=1
+  if (personsState.persons.length <=2) {
+    classes.push('red'); // classes = ['red']
+  }
+  
+  if (personsState.persons.length <=1) {
+    classes.push('bold'); // classes = ['red', 'bold']
   }
 
   return (
     <div className="App">
       <h1>This is a React Application! I'm feeling good.</h1>
-      <p>Awesome! This is really working.</p>
+      <p className={classes.join(' ')}>Awesome! This is really working.</p>
       <button 
         style={style}
         onClick={togglePersonsHandler}>Toggle Show State</button>
