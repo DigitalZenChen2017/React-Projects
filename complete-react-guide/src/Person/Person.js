@@ -1,5 +1,6 @@
 import React from 'react';
 import './Person.css';
+import Radium from 'radium';
 
 // Functional Component
 // Stateless or "Dumb" or "Presentational" Component
@@ -13,4 +14,4 @@ const person = (props) => {
   )
 };
 
-export default person;
+export default Radium(person);

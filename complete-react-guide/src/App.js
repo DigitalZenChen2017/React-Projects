@@ -5,6 +5,7 @@ import './Person/Person.css';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
 import './UserOutput/UserOutput.css';
+import Radium from 'radium';
 
 // Functional-Based Component or "stateless" component
 const App = props => {
@@ -63,7 +64,11 @@ const App = props => {
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    // ':hover': {
+    //   backgroundColor: 'lightgreen',
+    //   color: 'black' 
+    // }
   };
 
   const [ userState, setUsersState ] = useState({
@@ -119,6 +124,10 @@ const App = props => {
     );
 
     style.backgroundColor = 'red';
+    // style[':hover'] = {
+    //   backgroundColor: 'lightred',
+    //   color: 'black'
+    // }
   }
 
   // Red Bold classes
